@@ -1,0 +1,277 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Science Lab</title>
+<meta name="theme-color" content="#f6f7fb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Science Lab">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<style>:root{--bg:#f6f7fb;--fg:#1a1d2e;--card:#fff;--line:#b8bfd6;--acc:#e8590c;--mut:#5d6580;--nuc:#ff9f43;--el:#2f7bff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1220;--fg:#e8ebf7;--card:#1b2036;--line:#3a4263;--acc:#ff922b;--mut:#9aa3c0;--el:#6aa6ff}}
+:root[data-theme=dark]{--bg:#0f1220;--fg:#e8ebf7;--card:#1b2036;--line:#3a4263;--acc:#ff922b;--mut:#9aa3c0;--el:#6aa6ff}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;height:100%;display:flex;flex-direction:column;background:var(--bg);color:var(--fg);font:14px system-ui,sans-serif}
+[hidden]{display:none!important}
+#tabs{display:flex;gap:6px;padding:8px;flex:none;border-bottom:1px solid var(--line)}
+#tabs button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+#pt{flex:1;overflow:auto;padding:12px;font-size:15px}
+#cl{flex:1;min-height:0;display:flex;flex-direction:column}
+
+#info{display:flex;flex-wrap:wrap;gap:14px;background:var(--card);border-radius:16px;padding:14px;margin-bottom:12px}
+#atom{width:min(100%,280px);flex:none;margin:auto;color:var(--fg)}
+#d{flex:1;min-width:230px}
+.big{font-size:44px;font-weight:700;line-height:1}
+.chips{display:flex;gap:8px;margin:10px 0}.chip{flex:1;text-align:center;border-radius:12px;padding:8px 4px;background:var(--bg)}.chip b{display:block;font-size:22px}
+.chip small,.m{color:var(--mut)}
+#w{overflow-x:auto;padding-bottom:6px}
+#t{display:grid;grid-template-columns:repeat(18,38px);grid-template-rows:repeat(7,42px) 12px repeat(2,42px);gap:2px;width:max-content}
+.e{border:1px solid;border-radius:6px;padding:1px 3px;font:inherit;color:var(--fg);cursor:pointer;display:flex;flex-direction:column;justify-content:space-between}
+.e small{font-size:8px;opacity:.7;text-align:left}.e b{font-size:13px;text-align:center}
+.e.on{outline:3px solid var(--fg)}
+#lg{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;font-size:12px}#lg span{padding:2px 8px;border-radius:10px;border:1px solid}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+
+#pal{display:flex;gap:6px;overflow-x:auto;padding:8px;flex:none}
+button{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 10px;cursor:pointer}
+#pal button{flex:none;white-space:nowrap}
+#cv{display:block;width:100%;flex:1;min-height:220px;touch-action:none;background:radial-gradient(var(--line) 1px,transparent 1px) 0 0/20px 20px}
+#pan{padding:8px 12px;max-height:36vh;overflow:auto;flex:none;background:var(--card);border-top:1px solid var(--line)}
+#pan label{display:inline-flex;flex-direction:column;gap:2px;margin:6px 10px 6px 0;color:var(--mut);font-size:12px}
+#pan input[type=number]{width:120px;font:inherit;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.m{color:var(--mut)}
+.cb{fill:var(--card);stroke:var(--line);stroke-width:2}.cb.s{stroke:var(--acc);stroke-width:3}
+.tm{fill:var(--bg);stroke:var(--acc);stroke-width:2;cursor:pointer}.tm.p{fill:var(--acc)}
+.lb{fill:var(--fg);font-size:10px;text-anchor:middle;pointer-events:none}.ic{font-size:17px;text-anchor:middle;fill:var(--fg);pointer-events:none}
+.sy{fill:none;stroke:var(--fg);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.wr,.wh{fill:none;stroke-linejoin:round}.wr{stroke:var(--acc);stroke-width:3;stroke-linecap:round;pointer-events:none}.wh{stroke:transparent;stroke-width:16;cursor:pointer}
+#pn{flex:1;overflow:auto;padding:12px;font-size:15px}
+#pnh{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.sk{display:flex;align-items:center;gap:6px;font-size:16px}.sk b{font-size:30px}
+#pnw{display:flex;gap:6px;margin:10px 0}#pnw span{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:11px;color:var(--mut)}#pnw span.on{background:var(--acc);border-color:var(--acc);color:#fff}
+#pnl{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}#pnl button{min-width:38px}#pnl button.on{background:var(--acc);color:#fff;border-color:var(--acc)}#pnl button:disabled{opacity:.4}
+#pnb{height:8px;border-radius:4px;background:var(--card);margin:8px 0}#pnb div{height:100%;width:0;border-radius:4px;background:var(--acc);transition:width .3s}
+#pns{width:100%;max-width:420px;display:block;margin:0 auto;background:var(--card);border-radius:14px}
+.ln{stroke:var(--fg);stroke-width:1.5}.cl{font-size:9px;fill:var(--mut)}
+#pnf{min-height:24px;text-align:center;font-weight:600;margin:6px 0}#pna{overflow-x:auto;padding-bottom:6px}
+.kb{position:relative;display:flex;height:130px}
+.wk{flex:1;background:#f5f5f7;color:#222;border:1px solid #888;border-radius:0 0 6px 6px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-size:11px;cursor:pointer;user-select:none}
+.bk{position:absolute;top:0;height:80px;background:#1a1a24;border-radius:0 0 4px 4px;transform:translateX(-50%);z-index:2;cursor:pointer}
+.wk.ok{background:#51cf66}.wk.bad{background:#ff6b6b}
+.lt{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}.lt button{width:44px;height:48px;font-size:18px}.lt button.ok{background:#51cf66;color:#000}.lt button.bad{background:#ff6b6b;color:#000}
+.card{background:var(--card);border-radius:14px;padding:14px;text-align:center}
+#pnc{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+</style></head><body>
+<div id="tabs"><button class="on" data-v="pt">⚛️ Periodic Table</button><button data-v="cl">Circuit Lab</button><button data-v="pn">Piano Trainer</button><button id="th" style="margin-left:auto" title="Dark / light mode">🌓</button></div>
+<div id="pt">
+<div id="info"><svg id="atom" viewBox="0 0 300 300"></svg><div id="d"></div></div>
+<div id="w"><div id="t"></div></div><div id="lg"></div>
+</div><div id="cl" hidden>
+<div id="pal"></div><svg id="cv"></svg><div id="pan"></div>
+</div><div id="pn" hidden><div id="pnh"></div><div id="pnw"></div><div id="pnl"></div><div id="pnb"><div></div></div><svg id="pns" viewBox="0 0 300 150"></svg><div id="pnf"></div><div id="pna"></div><div id="pnc"></div></div>
+<script>(()=>{
+const E=`H Hydrogen 1.008|He Helium 4.0026|Li Lithium 6.94|Be Beryllium 9.0122|B Boron 10.81|C Carbon 12.011|N Nitrogen 14.007|O Oxygen 15.999|F Fluorine 18.998|Ne Neon 20.180|Na Sodium 22.990|Mg Magnesium 24.305|Al Aluminium 26.982|Si Silicon 28.085|P Phosphorus 30.974|S Sulfur 32.06|Cl Chlorine 35.45|Ar Argon 39.948|K Potassium 39.098|Ca Calcium 40.078|Sc Scandium 44.956|Ti Titanium 47.867|V Vanadium 50.942|Cr Chromium 51.996|Mn Manganese 54.938|Fe Iron 55.845|Co Cobalt 58.933|Ni Nickel 58.693|Cu Copper 63.546|Zn Zinc 65.38|Ga Gallium 69.723|Ge Germanium 72.630|As Arsenic 74.922|Se Selenium 78.971|Br Bromine 79.904|Kr Krypton 83.798|Rb Rubidium 85.468|Sr Strontium 87.62|Y Yttrium 88.906|Zr Zirconium 91.224|Nb Niobium 92.906|Mo Molybdenum 95.95|Tc Technetium 98|Ru Ruthenium 101.07|Rh Rhodium 102.91|Pd Palladium 106.42|Ag Silver 107.87|Cd Cadmium 112.41|In Indium 114.82|Sn Tin 118.71|Sb Antimony 121.76|Te Tellurium 127.60|I Iodine 126.90|Xe Xenon 131.29|Cs Caesium 132.91|Ba Barium 137.33|La Lanthanum 138.91|Ce Cerium 140.12|Pr Praseodymium 140.91|Nd Neodymium 144.24|Pm Promethium 145|Sm Samarium 150.36|Eu Europium 151.96|Gd Gadolinium 157.25|Tb Terbium 158.93|Dy Dysprosium 162.50|Ho Holmium 164.93|Er Erbium 167.26|Tm Thulium 168.93|Yb Ytterbium 173.05|Lu Lutetium 174.97|Hf Hafnium 178.49|Ta Tantalum 180.95|W Tungsten 183.84|Re Rhenium 186.21|Os Osmium 190.23|Ir Iridium 192.22|Pt Platinum 195.08|Au Gold 196.97|Hg Mercury 200.59|Tl Thallium 204.38|Pb Lead 207.2|Bi Bismuth 208.98|Po Polonium 209|At Astatine 210|Rn Radon 222|Fr Francium 223|Ra Radium 226|Ac Actinium 227|Th Thorium 232.04|Pa Protactinium 231.04|U Uranium 238.03|Np Neptunium 237|Pu Plutonium 244|Am Americium 243|Cm Curium 247|Bk Berkelium 247|Cf Californium 251|Es Einsteinium 252|Fm Fermium 257|Md Mendelevium 258|No Nobelium 259|Lr Lawrencium 266|Rf Rutherfordium 267|Db Dubnium 268|Sg Seaborgium 269|Bh Bohrium 270|Hs Hassium 277|Mt Meitnerium 278|Ds Darmstadtium 281|Rg Roentgenium 282|Cn Copernicium 285|Nh Nihonium 286|Fl Flerovium 289|Mc Moscovium 290|Lv Livermorium 293|Ts Tennessine 294|Og Oganesson 294`.split('|');
+const U=`Rocket fuel, ammonia, fuel cells;Oxygen (makes water), halogens, metals|Balloons, cooling MRI magnets, diving gas;Nothing (inert)|Rechargeable batteries, mood medicine;Water, air, nitrogen (fast)|Aerospace alloys, X-ray windows;Acids, oxygen when heated|Glass, detergents, fertiliser;Oxygen, halogens when hot|Fuel, steel, diamonds, all life;Oxygen (burns), hydrogen, metals|Fertiliser, explosives, food packing;Hydrogen, oxygen at high heat, lithium|Breathing, burning, steelmaking;Almost everything (rust, fire)|Toothpaste, non-stick Teflon;Nearly everything, even glass|Neon signs, lasers;Nothing (inert)|Table salt, street lamps;Water (explosive), chlorine, air|Light alloys, flares, medicine;Acids, oxygen (white flame), hot water|Cans, planes, foil;Acids, bases, oxygen (oxide skin)|Computer chips, glass, solar panels;Oxygen, halogens, strong bases|Matches, fertiliser, DNA;Oxygen (white P ignites), halogens|Sulfuric acid, rubber, gunpowder;Oxygen, metals, hydrogen|Water purifying, bleach, PVC;Metals, hydrogen, hydrocarbons|Welding gas, light bulbs;Nothing (inert)|Fertiliser, bananas, nerves;Water (lilac flames), air, halogens|Bones, cement, chalk;Water, acids, oxygen|Light alloys, stadium lamps;Acids, water slowly|Implants, jets, white paint;Halogens, oxygen and nitrogen when very hot|Tough steel, tools;Acids, oxygen when hot|Stainless steel, chrome plating;Acids, oxygen when hot|Steel, batteries;Acids, oxygen, water slowly|Steel, buildings, blood;Oxygen and water (rust), acids, sulfur|Magnets, blue pigment, batteries;Acids slowly, oxygen when hot|Coins, stainless steel, batteries;Acids, carbon monoxide, hot oxygen|Wires, pipes, coins;Oxygen (green patina), acids, sulfur|Galvanising, batteries, brass;Acids, bases, oxygen|LEDs, melts in your hand;Acids, bases, halogens|Fibre optics, infrared lenses;Halogens, hot acids|Semiconductors, wood treatment (toxic);Oxygen, halogens, acids|Solar cells, glass, photocopiers;Oxygen, halogens, metals|Flame retardants, photography;Metals, hydrogen, organics|Photo flashes, lasers;Almost nothing (inert)|Atomic clocks, research;Water (explosive), air|Red fireworks, old TV tubes;Water, air, acids|LEDs, lasers, superconductors;Water slowly, acids|Nuclear reactors, jewellery;Halogens, hot oxygen|Superconducting magnets, jets;Halogens, hot oxygen|Hard steel, lubricants;Hot oxygen, strong acids|Medical imaging tracers;Oxygen, acids (radioactive)|Electrical contacts, catalysts;Hot halogens, strong oxidisers|Car catalytic converters;Hot halogens, aqua regia slowly|Catalytic converters, jewellery;Some acids, absorbs hydrogen|Jewellery, mirrors, electronics;Sulfur (tarnish), nitric acid|Rechargeable batteries, pigments (toxic);Acids, oxygen|Touchscreens, solder;Acids, halogens|Tin cans, solder;Acids, bases, hot oxygen|Flame retardants, batteries;Halogens, hot oxygen|Solar panels, alloys;Oxygen, halogens|Antiseptic, thyroid health;Metals, starch (blue-black), hydrogen|Headlights, ion engines;Fluorine only|Atomic clocks, drilling fluid;Water (very explosive), air|X-ray scans, green fireworks;Water, oxygen, acids|Camera lenses, hybrid batteries;Water, oxygen, acids|Lighter flints, glass polish;Oxygen, water, acids|Magnets, yellow glass;Oxygen, water slowly|Strongest magnets, lasers;Oxygen, water slowly|Luminous paint, batteries;Oxygen, acids (radioactive)|Magnets, cancer treatment;Water slowly, oxygen|Euro banknote ink, TV phosphors;Water, oxygen (very reactive for a rare earth)|MRI contrast, nuclear shielding;Water slowly, oxygen|Green phosphors, sensors;Oxygen, water slowly|Magnets, nuclear control rods;Oxygen, acids|Lasers, strong magnets;Oxygen, water slowly|Fibre-optic amplifiers;Oxygen, acids|Portable X-ray machines;Oxygen, acids|Atomic clocks, lasers;Oxygen, water slowly|PET scan detectors;Oxygen, acids|Nuclear control rods, chips;Halogens, hot oxygen|Phone capacitors, implants;Almost inert, only HF acid|Bulb filaments, drill tips;Very hot oxygen, fluorine|Jet engines, catalysts;Hot oxygen, nitric acid|Pen tips, extreme density;Oxygen (toxic OsO4), halogens|Spark plugs, strong alloys;Almost nothing, hot halogens|Jewellery, catalysts, cancer drugs;Aqua regia, hot halogens|Jewellery, electronics, coins;Aqua regia, chlorine|Lamps, old thermometers;Sulfur, gold, halogens|Heart scans (toxic);Oxygen, acids|Car batteries, X-ray shields;Acids, oxygen slowly|Stomach medicine, low-melting solder;Hot oxygen, halogens|Static eliminators;Oxygen, acids (very radioactive)|Cancer research;Halogens, metals (extremely rare)|Cancer treatment (radioactive gas);Almost nothing|Research only (rarest);Water, air (extremely)|Old glow paint, research;Water, air, acids|Cancer therapy research;Water, oxygen|Gas mantles, nuclear fuel research;Oxygen, acids|Research only;Oxygen, acids|Nuclear power, weapons;Oxygen, water, acids|Nuclear by-product, research;Oxygen, acids|Nuclear weapons, space probes;Oxygen, water, acids|Smoke detectors;Oxygen, acids|Space probe power, research;Oxygen, acids`.split('|'),R='51844338a197647591986554554435434481a86433322224433461a8776666766666666423332213533661a8755565555555555000000000000000';
+const N=['Alkali metal','Alkaline earth metal','Transition metal','Post-transition metal','Metalloid','Nonmetal','Halogen','Noble gas','Lanthanide','Actinide'],Hu=[0,35,210,170,290,120,55,260,330,310];
+const cat=z=>[3,11,19,37,55,87].includes(z)?0:[4,12,20,38,56,88].includes(z)?1:z>56&&z<72?8:z>88&&z<104?9:[9,17,35,53,85,117].includes(z)?6:[2,10,18,36,54,86,118].includes(z)?7:[5,14,32,33,51,52].includes(z)?4:[1,6,7,8,15,16,34].includes(z)?5:(z>20&&z<31)||(z>38&&z<49)||(z>71&&z<81)||(z>103&&z<113)?2:3;
+function pos(z){if(z==1)return[1,1];if(z==2)return[1,18];if(z<=4)return[2,z-2];if(z<=10)return[2,z+8];if(z<=12)return[3,z-10];if(z<=18)return[3,z];if(z<=36)return[4,z-18];if(z<=54)return[5,z-36];if(z<=56)return[6,z-54];if(z<=71)return[9,z-54];if(z<=86)return[6,z-68];if(z<=88)return[7,z-86];if(z<=103)return[10,z-86];return[7,z-100]}
+function shells(z){if(z==24)return[2,8,13,1];if(z==29)return[2,8,18,1];const s=[];for(const[n,c]of[[1,2],[2,2],[2,6],[3,2],[3,6],[4,2],[3,10],[4,6],[5,2],[4,10],[5,6],[6,2],[4,14],[5,10],[6,6],[7,2],[5,14],[6,10],[7,6]]){if(z<=0)break;const t=Math.min(z,c);s[n-1]=(s[n-1]||0)+t;z-=t}return s}
+function atom(z){const s=shells(z),n=Math.round(+E[z-1].split(' ')[2])-z,sp=Math.min(28,98/Math.max(s.length-1,1));let h='';
+s.forEach((e,k)=>{const r=42+k*sp;h+=`<circle cx="150" cy="150" r="${r}" fill="none" stroke="currentColor" opacity=".25"/><g style="transform-origin:150px 150px;animation:spin ${6+k*4}s linear infinite ${k%2?'reverse':''}">`;for(let i=0;i<e;i++){const a=6.2832*i/e;h+=`<circle cx="${150+r*Math.cos(a)}" cy="${150+r*Math.sin(a)}" r="4" fill="var(--el)"/>`}h+='</g>'});
+return h+`<circle cx="150" cy="150" r="24" fill="var(--nuc)"/><text x="150" y="147" text-anchor="middle" font-size="10" font-weight="700" fill="#000">${z}p⁺</text><text x="150" y="159" text-anchor="middle" font-size="10" font-weight="700" fill="#000">${n}n⁰</text>`}
+function show(z){document.querySelectorAll('.e').forEach(b=>b.classList.toggle('on',b.dataset.z==z));
+const[us,rx]=(U[z-1]||(z<104?'Lab-made, research only;Oxygen, acids (very unstable)':'Made in labs, lasts seconds;Unknown, too unstable to study')).split(';'),rv=parseInt(R[z-1],16),[sy,nm,ms]=E[z-1].split(' '),n=Math.round(+ms)-z,s=shells(z),[r,c]=pos(z),f=z>56&&z<72||z>88&&z<104;
+document.getElementById('atom').innerHTML=atom(z);
+document.getElementById('d').innerHTML=`<div class="big">${sy}</div><h2 style="margin:4px 0">${nm}</h2><div class="m">${N[cat(z)]}</div><div class="chips"><div class="chip"><b>${z}</b><small>Protons (p⁺)</small></div><div class="chip"><b>${z}</b><small>Electrons (e⁻)</small></div><div class="chip"><b>${n}</b><small>Neutrons (n⁰)</small></div></div><p>Atomic number <b>${z}</b> · Atomic mass <b>${ms}</b><br>Period <b>${f?(z<80?6:7):r}</b> · Group <b>${f?'f-block':c}</b><br>Electron shells <b>${s.join(', ')}</b> · Outer-shell e⁻ <b>${s[s.length-1]}</b></p><p><b>Used for:</b> ${us}<br><b>Reacts with:</b> ${rx}</p><div><b>Reactivity</b> ${rv?rv+'/10':'unknown'}<div style="height:10px;border-radius:5px;background:var(--bg);margin:4px 0"><div style="height:100%;width:${rv*10}%;border-radius:5px;background:hsl(${120-rv*12} 75% 50%)"></div></div><small class="m">1 = inert, 10 = explosively reactive</small></div><p class="m">Neutrons = rounded atomic mass − protons (most common isotope, approximate). Neutral atom assumed.</p>`}
+const t=document.getElementById('t');
+E.forEach((s,i)=>{const z=i+1,[sy,nm]=s.split(' '),[r,c]=pos(z),k=cat(z),b=document.createElement('button');b.className='e';b.dataset.z=z;b.title=nm;b.style.cssText=`grid-row:${r};grid-column:${c};background:hsl(${Hu[k]} 70% 55%/.3);border-color:hsl(${Hu[k]} 70% 50%)`;b.innerHTML=`<small>${z}</small><b>${sy}</b>`;b.onclick=()=>show(z);t.append(b)});
+N.forEach((n,k)=>{const s=document.createElement('span');s.textContent=n;s.style.cssText=`background:hsl(${Hu[k]} 70% 55%/.3);border-color:hsl(${Hu[k]} 70% 50%)`;document.getElementById('lg').append(s)});
+show(1);
+})();(()=>{
+const $=id=>document.getElementById(id);
+const fmt=(x,u)=>{x=Math.abs(x);if(x<5e-7)return'0 '+u;for(const[m,p]of[[1e3,'k'],[1,''],[1e-3,'m'],[1e-6,'µ']])if(x>=m*.9995)return+(x/m).toPrecision(3)+' '+p+u;return'0 '+u};
+const RO='Resistance (Ω)';
+const T=[
+['bat','Battery','',{V:[9,'Voltage (V)',0,.5],R:[.5,'Internal resistance (Ω)',.01,.1]}],
+['solar','Solar cell','',{V:[2,'Voltage (V)',0,.1],R:[8,'Internal resistance (Ω)',.01,1]}],
+['isrc','Current source','',{I:[.02,'Current (A)',0,.005]}],
+['res','Resistor','',{R:[100,RO,.01,10]}],
+['rheo','Rheostat','',{R:[50,RO,.01,5]}],
+['therm','Thermistor','',{T:[25,'Temperature (°C)',-40,5]}],
+['ldr','Light sensor','',{L:[100,'Light (lux)',0,10]}],
+['bulb','Bulb','',{R:[12,RO,.1,1],W:[3,'Rated power (W)',.1,.5]}],
+['led','LED','',{Vf:[2,'Forward voltage (V)',.5,.1]}],
+['diode','Diode','',{Vf:[.7,'Forward voltage (V)',.2,.1]}],
+['zener','Zener diode','',{Z:[5.1,'Zener voltage (V)',1,.1]}],
+['fuse','Fuse','',{A:[1,'Rating (A)',.01,.1]}],
+['sw','Switch','',{on:[true,'Closed']}],
+['cap','Capacitor','',{C:[100,'Capacitance (µF)',.1,10]}],
+['ind','Inductor','',{L:[10,'Inductance (mH)',.1,1]}],
+['motor','Motor','',{R:[10,RO,.1,1]}],
+['buzzer','Buzzer','',{R:[50,RO,.1,5]}],
+['speaker','Speaker','',{R:[8,RO,.1,1]}],
+['heater','Heater','',{R:[20,RO,.1,1]}],
+['amm','Ammeter','',{}],['volt','Voltmeter','',{}],['wire','Jumper','',{}]];
+const TD={};T.forEach(a=>TD[a[0]]={n:a[1],i:a[2],p:a[3]});
+let NF=null,colorOn=false,lastTap={},comps=[],W=[],sel=null,pend=null,drag=null,cnt=0;
+const get=id=>comps.find(c=>c.id==id);
+const res=c=>c.t=='therm'?1000*Math.exp(3950*(1/(c.p.T+273.15)-1/298.15)):c.t=='ldr'?1e6/(c.p.L+10):c.p.R;
+function mdl(c,s){const p=c.p;if(c.blown)return[1e-9,0];
+switch(c.t){case'bat':case'solar':{const g=1/Math.max(p.R,.01);return[g,p.V*g]}
+case'isrc':return[0,p.I];case'sw':return[p.on?1e3:1e-9,0];case'cap':return[1e-9,0];
+case'ind':case'amm':return[1e3,0];case'wire':return[1e4,0];case'volt':return[1e-7,0];case'fuse':return[20,0];
+case'led':case'diode':case'zener':{const vf=c.t=='zener'?.7:p.Vf;return s==1?[20,20*vf]:s==2?[20,-20*p.Z]:[1e-9,0]}
+default:return[1/Math.max(res(c),.01),0]}}
+function gs(A,n){for(let i=0;i<n;i++){let m=i;for(let r=i+1;r<n;r++)if(Math.abs(A[r][i])>Math.abs(A[m][i]))m=r;[A[i],A[m]]=[A[m],A[i]];const d=A[i][i]||1e-12;for(let r=i+1;r<n;r++){const f=A[r][i]/d;if(f)for(let c=i;c<=n;c++)A[r][c]-=f*A[i][c]}}
+const x=Array(n).fill(0);for(let i=n-1;i>=0;i--){let s=A[i][n];for(let c=i+1;c<n;c++)s-=A[i][c]*x[c];x[i]=s/(A[i][i]||1e-12)}return x}
+function solve(){if(!comps.length)return;const par={},f=x=>par[x]==x?x:(par[x]=f(par[x]));
+comps.forEach(c=>{par[c.id+'a']=c.id+'a';par[c.id+'b']=c.id+'b'});W.forEach(([a,b])=>{par[f(a)]=f(b)});
+NF=f;const gnd=f((comps.find(c=>c.t=='bat'||c.t=='solar')||comps[0]).id+'b'),ix={};let n=0;
+comps.forEach(c=>['a','b'].forEach(s=>{const r=f(c.id+s);if(r!=gnd&&!(r in ix))ix[r]=n++}));
+const nd=(c,s)=>{const r=f(c.id+s);return r==gnd?-1:ix[r]},st=comps.map(()=>0);
+for(let it=0;it<40;it++){const A=Array.from({length:n},(_,i)=>{const r=Array(n+1).fill(0);r[i]=1e-9;return r}),M=comps.map((c,i)=>mdl(c,st[i]));
+comps.forEach((c,i)=>{const[g,J]=M[i],a=nd(c,'a'),b=nd(c,'b');if(a>=0){A[a][a]+=g;A[a][n]+=J;if(b>=0)A[a][b]-=g}if(b>=0){A[b][b]+=g;A[b][n]-=J;if(a>=0)A[b][a]-=g}});
+const x=gs(A,n),V=k=>k<0?0:x[k];let ch=0;
+comps.forEach((c,i)=>{const v=V(nd(c,'a'))-V(nd(c,'b'));c.v=v;c.i=M[i][0]*v-M[i][1];
+if(c.t=='led'||c.t=='diode'||c.t=='zener'){const vf=c.t=='zener'?.7:c.p.Vf,s=v>vf?1:(c.t=='zener'&&v<-c.p.Z?2:0);if(s!=st[i]){st[i]=s;ch=1}}});
+if(!ch)break}}
+function run(){for(let k=0;k<6;k++){solve();let b=0;comps.forEach(c=>{if(c.blown)return;const pw=Math.abs(c.v*c.i);if((c.t=='fuse'&&Math.abs(c.i)>c.p.A)||(c.t=='led'&&Math.abs(c.i)>.03)||(c.t=='bulb'&&pw>2*c.p.W)){c.blown=1;b=1}});if(!b)break}draw()}
+const dr=id=>{const c=get(id.slice(0,-1)),d=[[-1,0],[0,-1],[1,0],[0,1]][c.r||0];return id.slice(-1)=='a'?d:[-d[0],-d[1]]};
+const tp=id=>{const c=get(id.slice(0,-1)),d=dr(id);return[c.x+d[0]*44,c.y+d[1]*44]};
+const rt=(a,b)=>{const p=tp(a),q=tp(b),da=dr(a),db=dr(b),p1=[p[0]+da[0]*24,p[1]+da[1]*24],q1=[q[0]+db[0]*24,q[1]+db[1]*24],m=da[0]?[p1[0],q1[1]]:[q1[0],p1[1]];return[p,p1,m,q1,q].map(z=>z.join(',')).join(' ')};
+function rdt(c){const pw=Math.abs(c.v*c.i);let h=`V <b>${fmt(c.v,'V')}</b> · I <b>${fmt(c.i,'A')}</b> · P <b>${fmt(pw,'W')}</b>`;
+if(c.t=='therm'||c.t=='ldr')h+=` · R <b>${fmt(res(c),'Ω')}</b>`;if(c.t=='cap')h+=` · Q <b>${fmt(c.p.C*1e-6*c.v,'C')}</b>`;if(c.t=='ind')h+=` · E <b>${fmt(.5*c.p.L*1e-3*c.i*c.i,'J')}</b>`;
+return h+(c.blown?' · <b style="color:var(--acc)">BURNT OUT, press Repair</b>':'')}
+const CR='M-14 0a14 14 0 1 0 28 0a14 14 0 1 0 -28 0',LD='M-34 0H-14M14 0H34',RB='M-34 0H-18M18 0H34M-18 -6H18V6H-18Z',DI='M-34 0H-10M10 0H34M-10 -10V10L10 0ZM10 -10V10',
+AR=(x,y)=>`M${x} ${y}l8 8M${x+8} ${y+8}h-5M${x+8} ${y+8}v-5`,AU=(x,y)=>`M${x} ${y}l8 -8M${x+8} ${y-8}h-5M${x+8} ${y-8}v5`;
+const SYM={bat:'M-34 0H-6M6 0H34M-6 -12V12M6 -6V6',
+solar:CR+LD+'M-14 0H-3M3 0H14M-3 -8V8M3 -4V4'+AR(-26,-30)+AR(-16,-30),
+isrc:CR+LD+'M-8 0H8M-8 0l5 -4M-8 0l5 4',
+res:RB,rheo:RB+'M-14 12L14 -12M14 -12H7M14 -12V-5',therm:RB+'M-16 12H-10L10 -12',ldr:RB+AR(-16,-24)+AR(-6,-24),
+bulb:CR+LD+'M-9 -9L9 9M-9 9L9 -9',led:DI+AU(-2,-12)+AU(6,-12),diode:DI,zener:DI+'M6 -10H10V10H14',
+fuse:'M-34 0H34M-16 -6H16V6H-16Z',cap:'M-34 0H-4M4 0H34M-4 -12V12M4 -12V12',
+ind:'M-34 0H-20a5 5 0 0 1 10 0a5 5 0 0 1 10 0a5 5 0 0 1 10 0a5 5 0 0 1 10 0H34',
+motor:CR+LD,amm:CR+LD,volt:CR+LD,buzzer:CR+LD,speaker:'M-34 0H-12M-12 -6H-4L8 -14V14L-4 6H-12ZM8 0H34',
+heater:RB+'M-12 6L-6 -6M-4 6L2 -6M4 6L10 -6',wire:'M-34 0H34'};
+const LET={motor:'M',amm:'A',volt:'V',buzzer:'BZ'};
+const symd=c=>c.t=='sw'?'M-34 0H-16M16 0H34M-16 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0M12 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0'+(c.p.on?'M-14 0H14':'M-14 0L10 -14'):SYM[c.t]||'';
+function draw(){const cn={},ro=[];
+comps.forEach(c=>['a','b'].forEach(s=>{const r=NF?NF(c.id+s):c.id+s;cn[r]=(cn[r]||0)+1;if(cn[r]==2)ro.push(r)}));
+const nc=id=>{const r=NF?NF(id):id;return !colorOn?'var(--fg)':cn[r]<2?'#8a8fa3':`hsl(${(ro.indexOf(r)*137.5)%360} 75% 50%)`};let h='';
+W.forEach(([a,b],i)=>{const pts=rt(a,b);h+=`<polyline points="${pts}" class="wr" style="stroke:${nc(a)}"/><polyline points="${pts}" class="wh" data-w="${i}"/>`});
+comps.forEach(c=>{const pw=Math.abs(c.v*c.i),r=c.r||0,dv=r%2,da=dr(c.id+'a');let g=0,col='#ffd23f';
+if(c.t=='bulb')g=Math.min(1,pw/c.p.W);else if(c.t=='led'){g=Math.min(1,Math.abs(c.i)/.015);const v=c.p.Vf;col=v<1.9?'#ff3b3b':v<2.4?'#ffb020':v<3?'#3bff6a':'#4aa8ff'}else if(c.t=='heater'){g=Math.min(1,pw/50);col='#ff6a3d'}
+if(c.blown)g=0;
+const rd=c.t=='volt'?fmt(c.v,'V'):c.t=='amm'?fmt(c.i,'A'):c.t=='cap'?fmt(c.v,'V')+' charged':fmt(c.v,'V')+' · '+fmt(c.i,'A');
+const oa=colorOn?.3:0,ts=`style="text-anchor:${dv?'start':'middle'}"`,tx=dv?26:0;
+h+=`<g data-c="${c.id}" transform="translate(${c.x},${c.y})" style="cursor:grab">${g?`<circle r="36" fill="${col}" opacity="${(g*.85).toFixed(2)}"/>`:''}<g transform="rotate(${r*90})"><rect x="-34" y="-18" width="68" height="36" rx="8" class="cb"/><rect x="-34" y="-18" width="34" height="36" fill="${nc(c.id+'a')}" opacity="${oa}" clip-path="url(#cp)"/><rect x="0" y="-18" width="34" height="36" fill="${nc(c.id+'b')}" opacity="${oa}" clip-path="url(#cp)"/><rect x="-34" y="-18" width="68" height="36" rx="8" class="cb${sel==c.id?' s':''}" style="fill:none"/><path d="${symd(c)}" class="sy"/>`
++['a','b'].map(s=>{const x=s=='a'?-44:44,id=c.id+s;return`<line x1="${x}" x2="${x>0?34:-34}" y1="0" y2="0" stroke="${nc(id)}" stroke-width="2"/><circle data-t="${id}" cx="${x}" cy="0" r="${pend==id?11:8}" class="tm" style="fill:${colorOn?nc(id):'var(--bg)'}"/>`}).join('')
++`</g>${LET[c.t]?`<text y="5" class="ic" style="font-size:${c.t=='buzzer'?10:13}px;font-weight:600">${LET[c.t]}</text>`:''}${c.blown?'<path d="M-14 -14L14 14M-14 14L14 -14" style="stroke:#e03131;stroke-width:4;fill:none"/>':''}<text x="${tx}" y="${dv?-4:-34}" class="lb" ${ts}>${TD[c.t].n}</text><text x="${tx}" y="${dv?10:34}" class="lb" ${ts}>${rd}</text>`
++(['bat','solar','isrc'].includes(c.t)?`<text x="${da[0]*44+(da[1]?-12:0)}" y="${da[1]*44+(da[0]?-12:4)}" class="lb">+</text>`:'')+'</g>'});
+$('cv').innerHTML=`<defs><clipPath id="cp"><rect x="-34" y="-18" width="68" height="36" rx="8"/></clipPath></defs><g transform="translate(${v.x},${v.y}) scale(${v.k})">${h}</g>`;const c=get(sel),r=$('rd');if(c&&r)r.innerHTML=rdt(c)}
+function panel(){const c=get(sel);if(!c){$('pan').innerHTML='<p class="m">Tap a component to edit it. Tap two terminals (the circles) to join them with a wire. Tap a wire to remove it. Drag parts to move them. Double-tap a part or press R to rotate it.</p>';return}
+let h=`<b>${TD[c.t].n}</b><div id="rd" style="margin:4px 0"></div><div>`;
+for(const k in TD[c.t].p){const[v,l,mn,st]=TD[c.t].p[k];h+=typeof v=='boolean'?`<label><span>${l}</span><input type="checkbox" data-k="${k}" ${c.p[k]?'checked':''}></label>`:`<label>${l}<input type="number" data-k="${k}" value="${c.p[k]}" min="${mn}" step="${st}"></label>`}
+$('pan').innerHTML=h+'</div><button id="rot">Rotate</button> <button id="fix">Repair</button> <button id="del">Delete</button>'}
+$('pan').oninput=e=>{const k=e.target.dataset.k;if(!k)return;get(sel).p[k]=e.target.type=='checkbox'?e.target.checked:(+e.target.value||0);run()};
+$('pan').onclick=e=>{if(e.target.id=='rot')rot(get(sel));if(e.target.id=='fix'){get(sel).blown=0;run()}if(e.target.id=='del'){comps=comps.filter(c=>c.id!=sel);W=W.filter(w=>w[0].slice(0,-1)!=sel&&w[1].slice(0,-1)!=sel);sel=null;panel();run()}};
+const cv=$('cv'),v={x:0,y:0,k:1},ptrs=new Map();let pinch=null;
+const snap=x=>Math.round(x/20)*20;
+const pos=e=>{const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left-v.x)/v.k,y:(e.clientY-r.top-v.y)/v.k}};
+const vc=()=>({x:(cv.clientWidth/2-v.x)/v.k,y:(cv.clientHeight/2-v.y)/v.k});
+const zoomAt=(cx,cy,nk)=>{const r=cv.getBoundingClientRect(),sx=cx-r.left,sy=cy-r.top,wx=(sx-v.x)/v.k,wy=(sy-v.y)/v.k;v.k=Math.min(3,Math.max(.25,nk));v.x=sx-wx*v.k;v.y=sy-wy*v.k};
+cv.onwheel=e=>{e.preventDefault();zoomAt(e.clientX,e.clientY,v.k*(e.deltaY<0?1.1:.9));draw()};
+cv.onpointerdown=e=>{ptrs.set(e.pointerId,[e.clientX,e.clientY]);cv.setPointerCapture(e.pointerId);
+if(ptrs.size==2){const[a,b]=[...ptrs.values()];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1])||1,k:v.k};drag=null;return}
+const p=pos(e),t=e.target.closest('[data-t]');
+if(t){const id=t.dataset.t;if(!pend)pend=id;else{if(pend.slice(0,-1)!=id.slice(0,-1)&&!W.some(w=>(w[0]==pend&&w[1]==id)||(w[0]==id&&w[1]==pend)))W.push([pend,id]);pend=null}run();return}
+const w=e.target.closest('[data-w]');if(w){W.splice(+w.dataset.w,1);run();return}
+const c=e.target.closest('[data-c]');
+if(c){sel=c.dataset.c;const k=get(sel);drag={k,dx:p.x-k.x,dy:p.y-k.y};panel()}else{sel=null;pend=null;drag={pan:1,sx:e.clientX,sy:e.clientY,vx:v.x,vy:v.y};panel()}draw()};
+cv.onpointermove=e=>{if(!ptrs.has(e.pointerId))return;ptrs.set(e.pointerId,[e.clientX,e.clientY]);
+if(pinch&&ptrs.size==2){const[a,b]=[...ptrs.values()];zoomAt((a[0]+b[0])/2,(a[1]+b[1])/2,pinch.k*Math.hypot(a[0]-b[0],a[1]-b[1])/pinch.d);draw();return}
+if(!drag)return;
+if(drag.pan){v.x=drag.vx+e.clientX-drag.sx;v.y=drag.vy+e.clientY-drag.sy}else{const p=pos(e);const nx=snap(p.x-drag.dx),ny=snap(p.y-drag.dy);if(nx!=drag.k.x||ny!=drag.k.y)drag.moved=1;drag.k.x=nx;drag.k.y=ny}draw()};
+cv.onpointerup=cv.onpointercancel=e=>{ptrs.delete(e.pointerId);if(ptrs.size<2)pinch=null;const d=drag;drag=null;if(e.type=='pointerup'&&d&&d.k&&!d.moved){const n=Date.now();if(lastTap.id==d.k.id&&n-lastTap.t<350){lastTap={};rot(d.k)}else lastTap={id:d.k.id,t:n}}};
+cv.ondragover=e=>e.preventDefault();
+cv.ondrop=e=>{e.preventDefault();const p=pos(e);add(e.dataTransfer.getData('text'),snap(p.x),snap(p.y));panel();run()};
+const rot=c=>{c.r=((c.r||0)+1)%4;run()};
+document.addEventListener('keydown',e=>{if((e.key=='r'||e.key=='R')&&cv.offsetParent&&!/INPUT/.test(document.activeElement.tagName)&&get(sel))rot(get(sel))});
+function add(t,x,y){if(!TD[t])return;const p={};for(const k in TD[t].p)p[k]=TD[t].p[k][0];const c={id:'c'+(++cnt),t,x,y,p,r:0,blown:0,v:0,i:0};comps.push(c);sel=c.id;return c}
+T.forEach(a=>{const b=document.createElement('button');b.innerHTML=`<svg width="34" height="24" viewBox="-40 -30 80 60" style="vertical-align:middle;margin-right:4px"><path d="${symd({t:a[0],p:{on:true}})}" class="sy" style="stroke-width:3"/>${LET[a[0]]?`<text y="6" text-anchor="middle" style="font-size:20px;font-weight:600;fill:currentColor">${LET[a[0]]}</text>`:''}</svg>${a[1]}`;b.draggable=true;b.ondragstart=e=>e.dataTransfer.setData('text',a[0]);
+b.onclick=()=>{const q=vc();add(a[0],snap(q.x+Math.random()*80-40),snap(q.y+Math.random()*80-40));panel();run()};$('pal').append(b)});
+const cl=document.createElement('button');cl.textContent='Clear all';cl.onclick=()=>{comps=[];W=[];sel=null;pend=null;panel();draw()};$('pal').append(cl);
+const zb=(t,f)=>{const b=document.createElement('button');b.textContent=t;b.onclick=f;$('pal').append(b)},ctr=f=>{const r=cv.getBoundingClientRect();zoomAt(r.left+cv.clientWidth/2,r.top+cv.clientHeight/2,v.k*f);draw()};
+zb('＋',()=>ctr(1.25));zb('－',()=>ctr(.8));
+zb('Fit all',()=>{if(!comps.length)return;const xs=comps.map(c=>c.x),ys=comps.map(c=>c.y),x0=Math.min(...xs)-80,x1=Math.max(...xs)+80,y0=Math.min(...ys)-60,y1=Math.max(...ys)+60;v.k=Math.min(2,cv.clientWidth/(x1-x0),cv.clientHeight/(y1-y0));v.x=(cv.clientWidth-(x1+x0)*v.k)/2;v.y=(cv.clientHeight-(y1+y0)*v.k)/2;draw()});
+const lb=document.createElement('label');lb.style.cssText='flex:none;display:flex;align-items:center;gap:4px;white-space:nowrap';lb.innerHTML='<input type="checkbox"> Colour by connection';lb.firstChild.onchange=e=>{colorOn=e.target.checked;draw()};$('pal').append(lb);
+const b0=add('bat',100,180),r0=add('res',250,90),l0=add('led',400,180);r0.p.R=330;
+W.push([b0.id+'a',r0.id+'a'],[r0.id+'b',l0.id+'a'],[l0.id+'b',b0.id+'b']);sel=null;panel();run();
+})();
+(()=>{
+const $=id=>document.getElementById(id),NM='CDEFGAB',SM=[0,2,4,5,7,9,11],md=i=>((i%7)+7)%7;
+const ix=n=>+n.slice(1)*7+NM.indexOf(n[0]),fi=i=>NM[md(i)]+Math.floor(i/7),mi=i=>SM[md(i)]+12*(Math.floor(i/7)+1);
+const LV=[['Treble: middle C and its neighbours','t','B3','D4'],['Treble: five-finger position','t','C4','G4'],['Treble: full octave from middle C','t','C4','C5'],['Treble: ledger lines and higher notes','t','G3','G5'],['Bass clef: first steps','b','C3','C4'],['Bass clef: full range','b','E2','C4'],['Both clefs mixed','m','','']];
+const KEY='piano-v1';let S={streak:0,best:0,last:'',xp:0,unlocked:1,days:[],miss:{}};
+try{Object.assign(S,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const ago=n=>{const d=new Date();d.setDate(d.getDate()-n);return d},ds=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+let L=1,mode='key',names=true,q=0,ok=0,cur=null,prev=null,busy=0,ac;
+const play=(m,d=.5)=>{try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime;o.type='triangle';o.frequency.value=440*2**((m-69)/12);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.4,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(ac.destination);o.start();o.stop(t+d+.05)}catch(e){}};
+const pool=l=>{const[,c,a,b]=LV[l-1],r=(c,a,b)=>{const o=[];for(let i=ix(a);i<=ix(b);i++)o.push({i,c});return o};return c=='m'?[...r('t','G3','G5'),...r('b','E2','C4')]:r(c,a,b)};
+const pick=()=>{let ps=pool(L);if(prev&&ps.length>1)ps=ps.filter(p=>!(p.i==prev.i&&p.c==prev.c));const w=ps.map(p=>1+2*(S.miss[fi(p.i)+p.c]||0));let r=Math.random()*w.reduce((a,b)=>a+b,0),k=0;while(k<ps.length-1&&r>w[k]){r-=w[k];k++}return ps[k]};
+function head(){const t=ds(ago(0)),sh=S.last==t||S.last==ds(ago(1))?S.streak:0;
+$('pnh').innerHTML=`<div class="sk"><svg width="28" height="28" viewBox="0 0 24 24"><path d="M12 2C13 6 18 8 18 14A6 6 0 0 1 6 14C6 11 8 9 9 7C10 9 11 9 12 8C12 6 12 4 12 2Z" fill="${sh?'#ff7a00':'#8a8fa3'}"/></svg><b>${sh}</b> day streak</div><div><b>${S.xp}</b> XP</div><div class="m">Best ${S.best}</div>`;
+let w='';for(let i=6;i>=0;i--){const d=ago(i);w+=`<span class="${S.days.includes(ds(d))?'on':''}">${'SMTWTFS'[d.getDay()]}</span>`}
+$('pnw').innerHTML=w+`<small class="m" style="align-self:center;margin-left:6px">${S.last==t?'Done for today':'Finish one lesson to keep your streak'}</small>`;
+$('pnl').innerHTML=LV.map((v,i)=>`<button data-l="${i+1}" class="${i+1==L?'on':''}" ${i+1>S.unlocked?'disabled':''}>${i+1}</button>`).join('')+`<small class="m" style="align-self:center">${LV[L-1][0]}</small>`}
+function staff(p){const base=p.c=='t'?30:18,st=p.i-base,y=100-st*7,ld=s=>`<line x1="138" x2="172" y1="${100-s*7}" y2="${100-s*7}" class="ln"/>`;let h='';
+for(let k=0;k<5;k++)h+=`<line x1="30" x2="280" y1="${100-k*14}" y2="${100-k*14}" class="ln"/>`;
+for(let s=-2;s>=st;s-=2)h+=ld(s);for(let s=10;s<=st;s+=2)h+=ld(s);
+const up=st<4,sx=up?163:147;
+$('pns').innerHTML=h+`<line x1="${sx}" x2="${sx}" y1="${y}" y2="${up?y-30:y+30}" class="ln" style="stroke-width:2"/><ellipse cx="155" cy="${y}" rx="9" ry="6.5" transform="rotate(-20 155 ${y})" style="fill:var(--fg)"/><text x="34" y="20" class="cl">${p.c=='t'?'TREBLE CLEF':'BASS CLEF'}</text>`}
+function kb(){const ps=pool(L),lo=Math.floor(Math.min(...ps.map(p=>p.i))/7)*7,hi=Math.floor(Math.max(...ps.map(p=>p.i))/7)*7+6,n=hi-lo+1;let w='',b='';
+for(let i=lo;i<=hi;i++){const nm=fi(i),lt=NM[md(i)];w+=`<div class="wk" data-n="${nm}">${names||lt=='C'?nm:''}</div>`;if('CDFGA'.includes(lt)&&i<hi)b+=`<div class="bk" style="left:${(i-lo+1)*100/n}%;width:${55/n}%" data-m="${mi(i)+1}"></div>`}
+return `<div class="kb" style="min-width:${n*34}px">${w}${b}</div>`}
+function fix(){const e=$('pna').querySelector('[data-n="C4"]')||$('pna').querySelector('.wk');if(e)$('pna').scrollLeft=Math.max(0,e.offsetLeft-30)}
+window.pnFix=fix;
+function lesson(){q=0;ok=0;prev=null;busy=0;head();$('pnb').firstChild.style.width='0';
+$('pnc').innerHTML=`<button id="pnhear">Hear note</button><button id="pnmode">${mode=='key'?'Mode: tap the key':'Mode: name the letter'}</button><button id="pnkeys">Key names: ${names?'on':'off'}</button>`;
+$('pna').innerHTML=mode=='key'?kb():`<div class="lt">${[...NM].map(l=>`<button data-l="${l}">${l}</button>`).join('')}</div>`;fix();next()}
+function next(){if(q>=10)return finish();busy=0;$('pnf').textContent='';$('pna').querySelectorAll('.ok,.bad').forEach(x=>x.classList.remove('ok','bad'));cur=pick();prev=cur;staff(cur)}
+function answer(v){busy=1;const t=fi(cur.i),ln=NM[md(cur.i)],key=mode=='key',good=key?v==t:v==ln,kk=t+cur.c,A=$('pna');
+if(good){ok++;S.miss[kk]=Math.max(0,(S.miss[kk]||0)-1)}else{S.miss[kk]=(S.miss[kk]||0)+1;const w=A.querySelector(key?`[data-n="${v}"]`:`[data-l="${v}"]`);w&&w.classList.add('bad')}
+const tg=A.querySelector(key?`[data-n="${t}"]`:`[data-l="${ln}"]`);tg&&tg.classList.add('ok');if(!key)play(mi(cur.i));
+$('pnf').textContent=good?'Correct!':'That was '+(key?t:ln+' ('+t+')');
+q++;$('pnb').firstChild.style.width=q*10+'%';setTimeout(next,good?650:1600)}
+function finish(){cur=null;const t=ds(ago(0));let msg='',un='';
+if(S.last!=t){S.streak=S.last==ds(ago(1))?S.streak+1:1;S.last=t;S.best=Math.max(S.best,S.streak);S.days=[...S.days.filter(x=>x!=t),t].slice(-60);msg=`Streak: ${S.streak} day${S.streak>1?'s':''}!`}
+const xp=ok*10+(ok==10?20:0);S.xp+=xp;
+if(L==S.unlocked&&L<LV.length)if(ok>=8){S.unlocked++;un=`Level ${S.unlocked} unlocked!`}else un='Get 8/10 to unlock the next level.';
+save();head();$('pns').innerHTML='';$('pnf').textContent='';
+$('pna').innerHTML=`<div class="card"><h3 style="margin:0 0 6px">Lesson complete</h3><p>${ok}/10 correct · +${xp} XP</p><p><b>${msg}</b> ${un}</p><button id="pnagain">Practise again</button></div>`}
+$('pn').onclick=e=>{const b=e.target.closest('button'),k=e.target.closest('.wk'),bk=e.target.closest('.bk');
+if(bk){play(+bk.dataset.m);return}
+if(k){play(mi(ix(k.dataset.n)));if(cur&&!busy)answer(k.dataset.n);return}
+if(!b)return;
+if(b.closest('#pnl')){L=+b.dataset.l;lesson();return}
+if(b.closest('.lt')){if(cur&&!busy)answer(b.dataset.l);return}
+if(b.id=='pnhear'&&cur)play(mi(cur.i),.8);
+if(b.id=='pnmode'){mode=mode=='key'?'letter':'key';lesson()}
+if(b.id=='pnkeys'){names=!names;lesson()}
+if(b.id=='pnagain')lesson()};
+lesson();
+})();
+const RT={periodic:'pt',circuits:'cl',piano:'pn'},tb=document.querySelectorAll('#tabs button[data-v]'),sh=v=>{v=v||RT[location.hash.slice(1)]||'pt';tb.forEach(x=>x.classList.toggle('on',x.dataset.v==v));['pt','cl','pn'].forEach(i=>document.getElementById(i).hidden=i!=v);if(v=='pn'&&window.pnFix)window.pnFix()};
+tb.forEach(b=>b.onclick=()=>{try{location.hash=Object.keys(RT).find(k=>RT[k]==b.dataset.v)}catch(e){}sh(b.dataset.v)});addEventListener('hashchange',()=>sh());sh();
+const H=document.documentElement,dk=()=>H.dataset.theme?H.dataset.theme=='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+try{const s=localStorage.getItem('sl-theme');if(s)H.dataset.theme=s}catch(e){}
+document.getElementById('th').onclick=()=>{const n=dk()?'light':'dark';H.dataset.theme=n;try{localStorage.setItem('sl-theme',n)}catch(e){}};
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err => {
+      console.warn('Offline support could not be enabled:', err);
+    });
+  });
+}
+</script>
+</body></html>
